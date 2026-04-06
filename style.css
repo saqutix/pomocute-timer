@@ -1,0 +1,522 @@
+/* ===== RESET & BASE ===== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    --tomato:       #E8675A;
+    --tomato-light: #F47B6E;
+    --tomato-pale:  #FFD5CF;
+    --tomato-blush: #FFF0EE;
+    --tomato-dark:  #C44B3F;
+    --leaf:         #5C9B5A;
+    --cream:        #FFF8F5;
+    --cream-dark:   #FEEEE9;
+    --text-main:    #7A3F35;
+    --text-soft:    #C47A6E;
+    --text-muted:   #DBA89F;
+    --shadow-warm:  rgba(232, 103, 90, 0.22);
+    --radius-card:  52px;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: linear-gradient(155deg, #FFF2EC 0%, #FFE4DA 50%, #FFD5CF 100%);
+    font-family: 'Nunito', system-ui, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* ===== BACKGROUND FLOATING TOMATOES ===== */
+.bg-deco {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.float-toma {
+    position: absolute;
+    animation: floatBob linear infinite;
+}
+
+.t1 { width: 90px; top: 5%;  left: 4%;  animation-duration: 9s;  animation-delay: 0s; }
+.t2 { width: 60px; top: 70%; left: 8%;  animation-duration: 12s; animation-delay: -4s; }
+.t3 { width: 75px; top: 15%; right: 6%; animation-duration: 10s; animation-delay: -2s; }
+.t4 { width: 50px; top: 80%; right: 5%; animation-duration: 8s;  animation-delay: -6s; }
+
+@keyframes floatBob {
+    0%   { transform: translateY(0px) rotate(-4deg); }
+    33%  { transform: translateY(-18px) rotate(2deg); }
+    66%  { transform: translateY(-8px) rotate(-2deg); }
+    100% { transform: translateY(0px) rotate(-4deg); }
+}
+
+/* ===== CARD ===== */
+.timer-card {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    width: 100%;
+    background: rgba(255, 252, 250, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-card);
+    padding: 32px 28px 36px;
+    box-shadow:
+        0 30px 60px var(--shadow-warm),
+        0 8px 20px rgba(0,0,0,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    text-align: center;
+    border: 1.5px solid rgba(255, 230, 220, 0.7);
+    animation: cardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ===== HEADER ===== */
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.header-tomato {
+    width: 46px;
+    height: 46px;
+    filter: drop-shadow(0 3px 6px rgba(232,103,90,0.3));
+    animation: tomatoWiggle 4s ease-in-out infinite;
+}
+
+.header-tomato.small {
+    width: 32px;
+    height: 32px;
+    animation-delay: -2s;
+}
+
+@keyframes tomatoWiggle {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    50%       { transform: rotate(5deg) scale(1.06); }
+}
+
+h1 {
+    font-family: 'Caveat', cursive;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--tomato);
+    letter-spacing: 1px;
+    line-height: 1;
+    text-shadow: 2px 2px 0px var(--tomato-pale);
+}
+
+/* ===== MODE SWITCH ===== */
+.mode-switch {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+
+.mode-btn {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    font-weight: 600;
+    background: var(--cream-dark);
+    border: 1.5px solid transparent;
+    padding: 6px 20px;
+    border-radius: 50px;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.3px;
+}
+
+.mode-btn:hover {
+    background: var(--tomato-pale);
+    color: var(--tomato-dark);
+    transform: translateY(-1px);
+}
+
+.mode-btn.active {
+    background: var(--tomato);
+    color: white;
+    border-color: var(--tomato-dark);
+    box-shadow: 0 4px 12px var(--shadow-warm), 0 2px 0 var(--tomato-dark);
+    transform: translateY(-1px);
+}
+
+/* ===== TIMER CIRCLE ===== */
+.timer-circle-wrap {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    margin: 0 auto 24px;
+}
+
+.ring-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.ring-bg {
+    fill: none;
+    stroke: var(--tomato-pale);
+    stroke-width: 10;
+}
+
+.ring-fill {
+    fill: none;
+    stroke: var(--tomato);
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.9s linear;
+    filter: drop-shadow(0 0 4px rgba(232,103,90,0.4));
+}
+
+.timer-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at 40% 35%, #FFFFFF 0%, #FFF5F3 70%, #FFE8E4 100%);
+    border-radius: 50%;
+    box-shadow:
+        inset 0 2px 8px rgba(255,255,255,0.9),
+        inset 0 -4px 12px rgba(232,103,90,0.1);
+}
+
+.time-display {
+    font-family: 'Caveat', cursive;
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--tomato-dark);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 8px;
+    transition: color 0.3s;
+}
+
+.session-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    color: var(--text-soft);
+    background: var(--cream-dark);
+    padding: 4px 14px;
+    border-radius: 40px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Pulse when running */
+.timer-circle-wrap.running .timer-inner {
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: inset 0 2px 8px rgba(255,255,255,0.9), inset 0 -4px 12px rgba(232,103,90,0.1), 0 0 0 0 rgba(232,103,90,0); }
+    50%       { box-shadow: inset 0 2px 8px rgba(255,255,255,0.9), inset 0 -4px 12px rgba(232,103,90,0.1), 0 0 0 8px rgba(232,103,90,0.08); }
+}
+
+/* ===== CONTROLS ===== */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.ctrl-btn {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: white;
+    border: 1.5px solid var(--tomato-pale);
+    padding: 10px 28px;
+    border-radius: 50px;
+    cursor: pointer;
+    color: var(--tomato);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 5px 0 var(--tomato-pale), 0 6px 12px rgba(232,103,90,0.12);
+    transform: translateY(-2px);
+    transition: all 0.12s ease;
+    letter-spacing: 0.3px;
+}
+
+.ctrl-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--tomato-pale), 0 2px 4px rgba(232,103,90,0.1);
+}
+
+.ctrl-btn:hover {
+    background: var(--tomato-blush);
+}
+
+.btn-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.btn-icon.hidden {
+    display: none;
+}
+
+.reset-btn {
+    background: var(--cream-dark);
+    color: var(--text-soft);
+    border-color: var(--tomato-pale);
+    box-shadow: 0 5px 0 #F0C8C0, 0 6px 12px rgba(232,103,90,0.08);
+}
+
+.reset-btn:hover {
+    background: var(--tomato-pale);
+    color: var(--tomato-dark);
+}
+
+/* ===== CUTE MESSAGE ===== */
+.cute-message {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-soft);
+    background: var(--cream-dark);
+    display: inline-block;
+    padding: 7px 20px;
+    border-radius: 40px;
+    letter-spacing: 0.3px;
+    margin-bottom: 14px;
+    transition: all 0.4s ease;
+    position: relative;
+    /* cute little tomato dot decoration */
+}
+
+.cute-message::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: var(--tomato-light);
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    box-shadow: 0 0 0 2px var(--tomato-pale);
+}
+
+/* ===== INSTALL HINT ===== */
+.install-hint {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.7);
+    border-radius: 40px;
+    padding: 5px 14px;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 14px;
+    border: 1px dashed var(--tomato-pale);
+}
+
+.install-hint:hover {
+    background: white;
+    color: var(--text-soft);
+    transform: scale(1.03);
+}
+
+footer {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+    .timer-card {
+        padding: 24px 18px 28px;
+        border-radius: 40px;
+    }
+
+    h1 { font-size: 2.2rem; }
+
+    .timer-circle-wrap {
+        width: 210px;
+        height: 210px;
+    }
+
+    .time-display { font-size: 3.2rem; }
+
+    .ctrl-btn {
+        font-size: 1.2rem;
+        padding: 8px 22px;
+    }
+
+    .mode-btn {
+        font-size: 1rem;
+        padding: 5px 14px;
+    }
+
+    .t1, .t2, .t3, .t4 {
+        opacity: 0.6;
+    }
+}
+
+/* ===== INSTALL PROMPT ===== */
+#installStyles-injected { display: none; }
+
+.install-prompt-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 1000;
+    animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    display: none;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(120%); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+.install-prompt-card {
+    background: white;
+    border-radius: 28px;
+    padding: 22px;
+    box-shadow: 0 20px 50px rgba(232,103,90,0.25);
+    text-align: center;
+    max-width: 380px;
+    margin: 0 auto;
+    border: 1.5px solid var(--tomato-pale);
+}
+
+.install-icon {
+    margin-bottom: 10px;
+}
+
+.install-icon svg {
+    width: 52px;
+    height: 52px;
+}
+
+.install-prompt-card h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    color: var(--tomato);
+    margin-bottom: 8px;
+}
+
+.install-prompt-card p {
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-soft);
+    margin-bottom: 18px;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.install-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.install-btn-primary {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    background: var(--tomato);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 0 var(--tomato-dark);
+    transform: translateY(-2px);
+}
+
+.install-btn-primary:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 var(--tomato-dark);
+}
+
+.install-btn-secondary {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream-dark);
+    color: var(--text-muted);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.install-btn-secondary:hover {
+    background: var(--tomato-pale);
+}
+
+@media (min-width: 768px) {
+    .install-prompt-container {
+        bottom: 30px;
+        right: 30px;
+        left: auto;
+        width: 360px;
+    }
+}
+
+@media (max-width: 480px) {
+    .install-buttons {
+        flex-direction: column;
+    }
+    .install-btn-primary,
+    .install-btn-secondary {
+        width: 100%;
+    }
+}
+
+/* ===== SUCCESS TOAST ===== */
+.install-success-toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--leaf);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    z-index: 2000;
+    animation: slideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    box-shadow: 0 8px 20px rgba(92,155,90,0.3);
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+@keyframes slideDown {
+    from { transform: translate(-50%, -120%); opacity: 0; }
+    to   { transform: translate(-50%, 0);     opacity: 1; }
+}

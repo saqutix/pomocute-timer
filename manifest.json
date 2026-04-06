@@ -1,0 +1,19 @@
+{
+  "name": "Pomocute Timer",
+  "short_name": "Pomocute",
+  "description": "A cute Pomodoro timer that boosts your focus",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#E8675A",
+  "background_color": "#FFF2EC",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
